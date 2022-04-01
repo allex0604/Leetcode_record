@@ -2,52 +2,47 @@ class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
         //non-decreasing order==>binary search is good
-        if(nums.size() == 0) return {-1, -1};
-        vector<int> pos;
+        vector<int> pos(2, -1);
         int l=0, r=nums.size()-1, mid = 0;
-        int check = 0;
         while(l <= r){
             mid = l+(r-l)/2;
-            if(nums[mid] == target){
-                check = 1;
-                break;
-            }
-            else if(nums[mid] > target){
+            if(nums[mid] > target){
                 r = mid - 1;
             }
-            else{
+            else if(nums[mid] < target){
                 l = mid + 1;
             }
+            else{
+                if(mid == l || nums[mid-1] != nums[mid]){
+                    pos[0] = mid;
+                    break;
+                }
+                else{
+                   pos[0] = mid-1;
+                   r = mid -1; 
+                }            
+            }
         }
-        if(check == 0) return {-1, -1};
-        //find start
-        l=0, r=nums.size()-1;
-        double target1 = target - 0.5;
+        l=0, r=nums.size()-1, mid = 0;
         while(l <= r){
             mid = l+(r-l)/2;
-            if(nums[mid] > target1){
+            if(nums[mid] > target){
                 r = mid - 1;
             }
-            else{
+            else if(nums[mid] < target){
                 l = mid + 1;
             }
-        }
-        cout<<l <<" "<< r<<endl;
-        pos.push_back(l);
-        //find the last
-        l=0, r=nums.size()-1;
-        target1 = target + 0.5;
-        while(l <= r){
-            mid = l+(r-l)/2;
-            if(nums[mid] > target1){
-                r = mid - 1;
-            }
             else{
-                l = mid + 1;
+                if(mid == r || nums[mid] != nums[mid+1]){
+                    pos[1] = mid;
+                    break;
+                }
+                else{
+                   pos[1] = mid + 1;
+                   l = mid + 1; 
+                }            
             }
-        }
-        cout<<l <<" "<< r<<endl;
-        pos.push_back(r);
+        }        
         return pos;
     }
 };
