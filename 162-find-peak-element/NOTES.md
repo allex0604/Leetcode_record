@@ -2,4 +2,7 @@
 
 ​space: O(1)
 
-​key point: if mid < mid+1 ==> peak在右邊, else peak左邊
+​key point: 
+
+  the maximum value guarantee 
+  if mid < mid+1 ==> peak in right hand side, else peak in left hand side(we can directly use binary search)
