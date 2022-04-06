@@ -4,7 +4,7 @@ public:
         vector<vector<int>> ans;
         sort(nums.begin(), nums.end());
         if(nums.size() < 3) return {};
-        if(nums[0] > 0) return {};
+        //if(nums[0] > 0) return {};
         for(int i = 0 ; i < nums.size() ; ++i){ 
             if(nums[i] > 0) break;
             if(i > 0 && nums[i - 1] == nums[i])continue;
