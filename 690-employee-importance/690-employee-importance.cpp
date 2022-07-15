@@ -10,26 +10,18 @@ public:
 
 class Solution {
 public:
-    int DFS(vector<Employee*> employees, vector<int> &pos, int id){
-        int ans = employees[pos[id]]->importance;
-        for(auto &i:employees[pos[id]]->subordinates)
-            ans += DFS(employees, pos, i);
-        return ans;
+    void DFS(int id, unordered_map<int, Employee*> &m, int &sum){
+        sum += m[id]->importance;
+        for(auto &sub:m[id]->subordinates) DFS(sub, m, sum);
     }
     
     int getImportance(vector<Employee*> employees, int id) {
-        int ans = 0;
-        vector<int> pos(2001, 0);
-        for(int i=0; i<employees.size(); ++i){
-            pos[employees[i]->id] = i;
-        }
+        unordered_map<int, Employee*> m;
         for(auto& e:employees){
-            if(e->id == id){
-                ans = e->importance;
-                for(auto &i:e->subordinates)
-                    ans += DFS(employees, pos, i);
-            }
+            m[e->id] = e;
         }
+        int ans = 0;
+        DFS(id, m, ans);
         return ans;
     }
 };
